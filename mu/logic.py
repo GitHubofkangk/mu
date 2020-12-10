@@ -998,10 +998,9 @@ class Editor(QObject):
                         "{}".format(self.envars)
                     )
                 if "minify" in old_session:
-                    self.minify = old_session["minify"]
+                    self.minify = bool(old_session["minify"])
                     logger.info(
-                        "Minify scripts on micro:bit? "
-                        "{}".format(self.minify)
+                        "Minify scripts on micro:bit? {}".format(self.minify)
                     )
                 if "microbit_runtime" in old_session:
                     self.microbit_runtime = old_session["microbit_runtime"]

@@ -865,7 +865,9 @@ def test_flash_script_too_big_no_minify():
     with mock.patch("mu.modes.microbit.can_minify", False):
         mm.flash()
     view.show_message.assert_called_once_with(
-        'Unable to flash "foo"', "Your script is too long!", "Warning"
+        'Unable to flash "foo"',
+        "Your script is too long and code minification is disabled",
+        "Warning",
     )
 
 
@@ -1012,6 +1014,7 @@ def test_flash_minify():
     view = mock.MagicMock()
     script = "#" + ("x" * 8193) + "\n"
     view.current_tab.text = mock.MagicMock(return_value=script)
+    view.current_tab.label = "foo"
     view.show_message = mock.MagicMock()
     editor = mock.MagicMock()
     editor.minify = True
@@ -1026,7 +1029,9 @@ def test_flash_minify():
     with mock.patch("nudatus.mangle", side_effect=ex) as m:
         mm.flash()
         view.show_message.assert_called_once_with(
-            "Problem with script", "Bad [1:0]", "Warning"
+            'Unable to flash "foo"',
+            "Problem minifying script\nBad [1:0]",
+            "Warning",
         )
 
 
